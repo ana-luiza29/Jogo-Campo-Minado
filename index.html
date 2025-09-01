@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campo Minado Senac</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
+    <header class="absolute top-0 left-0 w-full p-4 flex items-center z-10">
+    <img src="logo-senac.png" alt="Logo do SESC" class="h-10 w-auto">
+    <h1 class="text-xl font-bold ml-2">Campo Minado Senac</h1>
+</header>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Cabeçalho Persistente com a Logo -->
+    <header class="">
+        <!-- Local para a logo senac.png -->
+        <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns=""><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.79-2.731 9.563M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-3.517 1.009-6.79 2.731-9.563"></path></svg>
+        <h1 class="text-xl font-bold ml-2"></h1>
+    </header>
+
+    <main class="w-full max-w-4xl mx-auto flex flex-col items-center">
+        <!-- Tela Inicial (Splash Screen) -->
+        <div id="splash-screen" class="text-center w-full max-w-md">
+            <h1 class="text-5xl font-bold mb-4">Campo Minado Senac</h1>
+            <p class="text-lg text-gray-300 mb-8">Teste sua lógica e sorte para limpar o campo sem detonar as minas!</p>
+            <div class="mb-6">
+                <label for="player-name" class="block text-left text-lg font-medium mb-2">Digite seu nome:</label>
+                <input type="text" id="player-name" class="w-full bg-gray-700 text-white rounded-lg p-3 text-lg border-2 border-gray-600 focus:border-blue-500 focus:outline-none" placeholder="Seu nome aqui">
+                <p id="name-error" class="text-red-500 mt-2 text-left hidden">Por favor, digite seu nome para começar.</p>
+            </div>
+            <button id="start-game-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-transform transform hover:scale-105">
+                Começar Jogo
+            </button>
+            <div class="mt-8 bg-gray-800 p-4 rounded-lg">
+                <h3 class="text-2xl font-bold mb-3">🏆 Ranking Top 5 🏆</h3>
+                <ol id="ranking-list" class="text-left space-y-2">
+                    <!-- Ranking será preenchido pelo JavaScript -->
+                </ol>
+            </div>
+        </div>
+
+        <!-- Tela de Jogo -->
+        <div id="game-screen" class="hidden w-full">
+            <div id="game-info" class="flex flex-wrap justify-between items-center bg-gray-800 p-4 rounded-lg mb-4 gap-4">
+                <div>
+                    <span class="font-bold text-lg">Jogador:</span>
+                    <span id="display-player-name" class="text-blue-300"></span>
+                </div>
+                <div>
+                    <span class="font-bold text-lg">Nível:</span>
+                    <span id="display-level" class="text-yellow-300"></span>
+                </div>
+                <div>
+                    <span class="font-bold text-lg">Pontuação:</span>
+                    <span id="display-score" class="text-green-300">0</span>
+                </div>
+                 <div>
+                    <span class="font-bold text-lg">Tempo:</span>
+                    <span id="display-timer" class="text-red-400">--:--</span>
+                </div>
+            </div>
+
+            <div id="difficulty-selector" class="flex justify-center gap-4 mb-4">
+                 <button class="level-btn bg-green-600 hover:bg-green-700 font-bold py-2 px-4 rounded-lg" data-level="Fácil">Fácil (8x8)</button>
+                 <button class="level-btn bg-yellow-600 hover:bg-yellow-700 font-bold py-2 px-4 rounded-lg" data-level="Médio">Médio (16x16)</button>
+                 <button class="level-btn bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg" data-level="Difícil">Difícil (24x24)</button>
+            </div>
+            
+            <div id="game-board" class="game-board bg-gray-700 p-2 rounded-lg shadow-lg">
+                <!-- Células do jogo serão geradas aqui pelo JavaScript -->
+            </div>
+        </div>
+
+        <!-- Tela de Fim de Jogo -->
+        <div id="end-screen" class="hidden text-center w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-2xl">
+            <h2 id="end-message" class="text-4xl font-bold mb-4"></h2>
+            <div id="final-stats" class="text-lg mb-6">
+                <p>Pontuação Final: <span id="final-score" class="font-bold text-green-400"></span></p>
+                <p id="end-reason"></p>
+            </div>
+            <button id="play-again-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform transform hover:scale-105">
+                Jogar Novamente
+            </button>
+        </div>
+    </main>
+
+    <!-- Lógica do Jogo -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+
