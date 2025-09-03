@@ -1,60 +1,138 @@
-/* Estilos personalizados */
+/* Reset básico */
 body {
-    font-family: 'Inter', sans-serif;
-    touch-action: manipulation; /* Melhora a responsividade ao toque em dispositivos móveis */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: #f3f4f6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 30px;
 }
 
-.game-board {
-    display: grid;
-    gap: 2px;
-    user-select: none; /* Impede a seleção de texto nas células */
-   
-    header {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+/* Container principal */
+#game-container {
+  background: rgba(31, 41, 55, 0.9);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
 }
+
+/* Títulos */
+h1, h2 {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #f9fafb;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+/* Botões */
+button {
+  background: #2563eb;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #1e40af;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Inputs */
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Tabuleiro */
+#board {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .cell {
-    aspect-ratio: 1 / 1;
-    transition: all 0.1s ease-in-out;
-    font-size: clamp(0.75rem, 4vw, 1.25rem); /* Fonte responsiva */
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  border: 2px solid #374151;
+  background: #1f2937;
+  color: #f9fafb;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cell:hover {
+  background: #374151;
+  transform: scale(1.08);
 }
 
 .cell.revealed {
-    background-color: #4a5568; /* gray-700 */
+  background: #4b5563;
+  transform: scale(1.05);
+  color: #e5e7eb;
 }
 
-/* Cores para os números de minas adjacentes */
-.c1 { color: #63b3ed; } /* blue-400 */
-.c2 { color: #68d391; } /* green-400 */
-.c3 { color: #f56565; } /* red-500 */
-.c4 { color: #4299e1; } /* blue-600 */
-.c5 { color: #b7791f; } /* yellow-700 */
-.c6 { color: #4fd1c5; } /* teal-400 */
-.c7 { color: #000; }
-.c8 { color: #718096; } /* gray-500 */
-
-/* Estilos para a lista de ranking */
-#ranking-list li {
-    background-color: #4a5568; /* gray-700 */
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: 500;
+/* Timer e info */
+#timer, #flags {
+  font-size: 16px;
+  margin: 10px 0;
+  font-weight: bold;
 }
 
-#ranking-list li .rank-name {
-    color: #a0aec0; /* gray-400 */
+/* Mensagens finais */
+#end-message {
+  font-size: 20px;
+  margin-top: 20px;
+  font-weight: bold;
+  transition: opacity 0.5s ease;
 }
 
-#ranking-list li .rank-score {
-    color: #68d391; /* green-400 */
-    font-weight: bold;
+/* Ranking */
+#ranking {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(55, 65, 81, 0.7);
+  animation: fadeInUp 0.6s ease;
 }
 
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

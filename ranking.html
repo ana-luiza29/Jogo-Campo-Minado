@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking Completo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS Personalizado -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <header class="absolute top-0 left-0 w-full p-4 flex items-center z-10">
+        <img src="logo-senac.png" alt="Logo do SESC" class="h-10 w-auto">
+        <h1 class="text-xl font-bold ml-2">Campo Minado Senac</h1>
+    </header>
+
+    <main class="w-full max-w-2xl mx-auto flex flex-col items-center">
+        <div class="text-center w-full bg-gray-800 p-8 rounded-lg shadow-2xl">
+            <h1 class="text-4xl font-bold mb-4">Ranking de Pontuação</h1>
+            <p class="text-lg text-gray-400 mb-6">Confira a pontuação de todos os jogadores.</p>
+            
+            <table class="w-full text-left table-auto border-separate border-spacing-y-2">
+                <thead>
+                    <tr class="bg-gray-700 rounded-lg">
+                        <th class="p-4 rounded-l-lg">Posição</th>
+                        <th class="p-4">Jogador</th>
+                        <th class="p-4 rounded-r-lg">Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody id="full-ranking-list">
+                    <!-- O ranking será preenchido dinamicamente pelo JavaScript -->
+                </tbody>
+            </table>
+
+            <a href="index.html" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform transform hover:scale-105">
+                Voltar para o Jogo
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rankingListElement = document.getElementById('full-ranking-list');
+            const RANKING_KEY = 'minesweeperRanking';
+
+            function getRanking() {
+                const rankingJSON = localStorage.getItem(RANKING_KEY);
+                return rankingJSON ? JSON.parse(rankingJSON) : [];
+            }
+
+            function displayFullRanking() {
+                const ranking = getRanking();
+                rankingListElement.innerHTML = '';
+                if (ranking.length === 0) {
+                    rankingListElement.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center text-gray-400 p-4">Nenhuma pontuação registrada ainda.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                ranking.sort((a, b) => b.score - a.score);
+
+                ranking.forEach((entry, index) => {
+                    const row = document.createElement('tr');
+                    row.classList.add('bg-gray-700', 'hover:bg-gray-600', 'transition-colors', 'duration-200');
+                    row.innerHTML = `
+                        <td class="p-4 rounded-l-lg">${index + 1}.</td>
+                        <td class="p-4">${entry.name}</td>
+                        <td class="p-4 rounded-r-lg">${entry.score}</td>
+                    `;
+                    rankingListElement.appendChild(row);
+                });
+            }
+
+            displayFullRanking();
+        });
+    </script>
+</body>
+</html>
