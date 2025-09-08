@@ -332,7 +332,6 @@ function showMessage(message) {
     modalMessage.textContent = message;
     messageModal.classList.remove("hidden");
 }
-
 function hideModal() {
     messageModal.classList.add("hidden");
 }
