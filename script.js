@@ -151,6 +151,19 @@ function calculateAdjacentMines() {
     }
 }
 
+// Nova função para revelar todas as bombas
+function revealAllMines() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (board[i][j].isMine) {
+                const cellElement = document.querySelector(`.cell[data-row='${i}'][data-col='${j}']`);
+                cellElement.classList.add("revealed-mine");
+                cellElement.textContent = "💣";
+            }
+        }
+    }
+}
+
 function handleCellClick(row, col) {
     if (gameOver) return;
     const cell = board[row][col];
@@ -163,15 +176,13 @@ function handleCellClick(row, col) {
     }
 
     if (cell.isMine) {
-        const cellElement = document.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
-        cellElement.classList.add("revealed-mine");
-        cellElement.textContent = "💣";
         gameOver = true;
         playBoomSound();
+        revealAllMines(); // Chamada para revelar todas as bombas
 
         setTimeout(() => {
             endGame(false, "Você acionou uma mina!");
-        }, 1500); // 1.5 segundo de atraso
+        }, 3000); // Atraso de 3 segundos
 
         return;
     }
