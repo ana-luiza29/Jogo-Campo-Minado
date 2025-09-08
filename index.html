@@ -1,72 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campo Minado Senac</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campo Minado Senac</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
 
-  <!-- Tela inicial -->
-  <div id="start-screen" class="text-center">
-
-    <!-- Logo Senac -->
-    <div class="flex justify-center mb-6">
-      <img src="https://liveondemand.com.br/wp-content/uploads/2019/05/logo-SENAC.png" alt="Logo Senac" class="w-32 h-auto border-4 border-yellow-500 rounded-lg p-2 bg-white" />
+    <!-- Modal de Mensagem -->
+    <div id="message-modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="modal-message" class="text-lg font-bold mb-4"></p>
+            <button onclick="hideModal()" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">OK</button>
+        </div>
     </div>
 
-    <h1 class="text-4xl font-bold mb-6">Campo Minado Senac</h1>
-
-    <!-- Nome do jogador -->
-    <input id="player-name" type="text" placeholder="Digite seu nome"
-           class="px-4 py-2 rounded text-black mb-4 block mx-auto" />
-
-    <!-- Seleção de dificuldade -->
-    <label for="difficulty" class="block mb-2 font-semibold">Selecione a Dificuldade:</label>
-    <select id="difficulty" class="px-4 py-2 rounded text-black mb-4">
-      <option value="easy">Fácil (8x8 - 10 minas)</option>
-      <option value="medium">Médio (16x16 - 40 minas)</option>
-      <option value="hard">Difícil (24x24 - 99 minas)</option>
-    </select>
-
-    <button onclick="startGame()" class="px-6 py-2 bg-blue-600 rounded hover:bg-blue-700">Iniciar Jogo</button>
-
-    <!-- Link para ranking -->
-    <a href="ranking.html" class="block mt-6 text-blue-400 hover:underline">
-      Ver Ranking Completo →
-    </a>
-  </div>
-
-  <!-- Tela do jogo -->
-  <div id="game-screen" class="hidden flex flex-col items-center">
-    <div class="flex justify-between w-full max-w-lg mb-4">
-      <div id="player-display" class="font-semibold"></div>
-      <div id="timer" class="font-semibold"></div>
-      <div id="score-display" class="font-semibold"></div>
+    <!-- Tela inicial -->
+    <div id="start-screen" class="text-center slide-in-up">
+        <div class="flex justify-center mb-6">
+            <img src="https://liveondemand.com.br/wp-content/uploads/2019/05/logo-SENAC.png" alt="Logo Senac" class="w-32 h-auto border-4 border-yellow-500 rounded-lg p-2 bg-white" />
+        </div>
+        <h1 class="text-4xl font-bold mb-6">Campo Minado Senac</h1>
+        <input id="player-name" type="text" placeholder="Digite seu nome" class="px-4 py-2 rounded text-black mb-4 block mx-auto" />
+        <label for="difficulty" class="block mb-2 font-semibold">Selecione a Dificuldade:</label>
+        <select id="difficulty" class="px-4 py-2 rounded text-black mb-4">
+            <option value="easy">Fácil (8x8 - 10 minas)</option>
+            <option value="medium">Médio (16x16 - 40 minas)</option>
+            <option value="hard">Difícil (24x24 - 99 minas)</option>
+        </select>
+        <button onclick="startGame()" class="px-6 py-2 bg-blue-600 rounded-full hover:bg-blue-700 transition duration-300">Iniciar Jogo</button>
+        <button onclick="showRanking()" class="px-6 py-2 bg-purple-600 rounded-full hover:bg-purple-700 transition duration-300">Ver Ranking</button>
     </div>
-    <div id="game-board" class="grid gap-1"></div>
-    <div class="mt-4">
-      <button onclick="restartGame()" class="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600">Reiniciar</button>
-      <button onclick="backToStart()" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700">Sair</button>
+
+    <!-- Tela do jogo -->
+    <div id="game-screen" class="hidden flex flex-col items-center fadeIn">
+        <div class="flex justify-between w-full max-w-lg mb-4">
+            <div id="player-display" class="font-semibold text-lg"></div>
+            <div id="timer" class="font-semibold text-lg"></div>
+            <div id="score-display" class="font-semibold text-lg"></div>
+        </div>
+        <div id="game-board" class="grid gap-1"></div>
+        <div class="mt-8 flex space-x-4">
+            <button onclick="restartGame()" class="px-4 py-2 bg-yellow-500 rounded-full hover:bg-yellow-600 transition duration-300">Reiniciar</button>
+            <button onclick="backToStart()" class="px-4 py-2 bg-red-600 rounded-full hover:bg-red-700 transition duration-300">Sair</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Tela de fim de jogo -->
-  <div id="end-screen" class="hidden text-center">
-    <h2 id="end-message" class="text-3xl font-bold mb-4"></h2>
-    <p class="mb-4">Sua pontuação: <span id="final-score"></span></p>
-    <button onclick="restartGame()" class="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600">Jogar Novamente</button>
-    <button onclick="backToStart()" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700">Menu Inicial</button>
-  </div>
+    <!-- Tela de fim de jogo e Ranking -->
+    <div id="end-screen" class="hidden text-center fadeIn">
+        <h2 id="end-message" class="text-3xl font-bold mb-4"></h2>
+        <p class="mb-4 text-xl">Sua pontuação: <span id="final-score" class="font-bold"></span></p>
+        <div class="mt-8 flex space-x-4">
+            <button onclick="restartGame()" class="px-4 py-2 bg-yellow-500 rounded-full hover:bg-yellow-600 transition duration-300">Jogar Novamente</button>
+            <button onclick="backToStart()" class="px-4 py-2 bg-red-600 rounded-full hover:bg-red-700 transition duration-300">Menu Inicial</button>
+        </div>
+    </div>
 
-  <!-- Sons -->
-  <audio id="boom-sound" src="audio/bomba.mp3"></audio>
-  <audio id="defeat-sound" src="audio/derrota.mp3"></audio>
-  <audio id="victory-sound" src="audio/vitoria.mp3"></audio>
+    <div id="ranking-screen" class="hidden text-center fadeIn">
+        <h2 class="text-3xl font-bold mb-4">Ranking</h2>
+        <table class="w-full max-w-xl mx-auto text-left border-collapse border border-gray-700 rounded-lg overflow-hidden">
+            <thead class="bg-gray-800">
+                <tr>
+                    <th class="p-4 border-b border-gray-700">Posição</th>
+                    <th class="p-4 border-b border-gray-700">Nome</th>
+                    <th class="p-4 border-b border-gray-700">Pontuação</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-list" class="bg-gray-700">
+                <!-- Ranking list will be populated here -->
+            </tbody>
+        </table>
+        <div class="mt-8">
+            <button onclick="backToStart()" class="px-4 py-2 bg-blue-600 rounded-full hover:bg-blue-700 transition duration-300">Voltar</button>
+        </div>
+    </div>
 
-  <script src="script.js"></script>
+    <!-- Sons -->
+    <audio id="click-sound" src="audio/clique.mp3"></audio>
+    <audio id="boom-sound" src="audio/bomba.mp3"></audio>
+    <audio id="defeat-sound" src="audio/derrota/"></audio>
+    <audio id="victory-sound" src="audio/vitoria.mp3"></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
